@@ -9,9 +9,7 @@ from google.auth.transport.requests import Request
 import google.auth.exceptions
 import re
 
-# ----------------------------
-# Constants and Setup
-# ----------------------------
+
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 CREDENTIALS_FILE = 'credentials.json'
 TOKEN_FILE = 'token.json'
@@ -24,9 +22,7 @@ with open('ml/tfidf_vectorizer.pkl', 'rb') as f:
     vectorizer = pickle.load(f)
 
 
-# ----------------------------
-# Authenticate and Connect to Gmail
-# ----------------------------
+
 def authenticate_gmail():
     creds = None
     
@@ -56,9 +52,9 @@ def authenticate_gmail():
     return service
 
 
-# ----------------------------
+
 # Fetch Emails from Gmail
-# ----------------------------
+
 def fetch_emails(service, max_results=10):
     messages = service.users().messages().list(userId='me', maxResults=max_results).execute().get('messages', [])
     email_texts = []
@@ -87,9 +83,9 @@ def fetch_emails(service, max_results=10):
     return email_texts
 
 
-# ----------------------------
-# Streamlit UI
-# ----------------------------
+
+#  Setup Streamlit
+
 
 def classify_emails(emails):
     df = pd.DataFrame(emails, columns=['Subject', 'Body'])
